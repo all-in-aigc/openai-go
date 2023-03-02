@@ -60,6 +60,30 @@ func main() {
 
 there are some examples under the `examples` folder, check and see how to request other apis.
 
+- [Create chat completion](https://platform.openai.com/docs/api-reference/chat/create)
+
+```go
+cli := getClient()
+
+uri := "/v1/chat/completions"
+params := map[string]interface{}{
+	"model":       "gpt-3.5-turbo",
+	"messages":      []map[string]interface{}{
+		{"role": "user", "content": "hello"},
+	},
+}
+
+res, err := cli.Post(uri, params)
+if err != nil {
+	log.Fatalf("request api failed: %v", err)
+}
+
+message := res.Get("choices.0.message.content").String()
+
+fmt.Printf("message is: %s", message)
+// Output: xxx
+```
+
 - [Create Completion](https://beta.openai.com/docs/api-reference/completions/create)
 
 ```go
