@@ -1,4 +1,4 @@
-package gpt3
+package gpt
 
 import (
 	"fmt"
@@ -7,24 +7,28 @@ import (
 	"github.com/idoubi/goutils/request"
 )
 
-// Client: GPT-3 client
+// Client: GPT client
 type Client struct {
 	opts          *Options // custom options
 	requestClient *request.Client
 }
 
-// NewClient: new GPT-3 Client
+// NewClient: new GPT Client
 func NewClient(opts *Options) (*Client, error) {
 	// set default options
 	if opts.Timeout <= 0 {
 		opts.Timeout = 30 * time.Second
+	}
+	// set default api baseuri
+	if opts.BaseUri == "" {
+		opts.BaseUri = "https://api.openai.com"
 	}
 
 	cli := &Client{opts: opts}
 
 	// set request client
 	cli.requestClient = request.NewClient(&request.Options{
-		BaseUri: "https://api.openai.com",
+		BaseUri: opts.BaseUri,
 		Debug:   opts.Debug,
 		Timeout: opts.Timeout,
 	})

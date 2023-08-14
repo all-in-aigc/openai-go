@@ -1,4 +1,4 @@
-module github.com/chatgp/gpt3
+module github.com/all-in-aigc/gpt
 
 go 1.16
 

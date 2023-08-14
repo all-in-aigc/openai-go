@@ -1,4 +1,4 @@
-package gpt3
+package gpt
 
 import (
 	"time"
@@ -12,4 +12,6 @@ type Options struct {
 	Timeout time.Duration
 	// ApiKey is used to authoration
 	ApiKey string
+	// BaseUri is used to set api baseuri
+	BaseUri string
 }

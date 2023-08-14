@@ -3,15 +3,16 @@ package examples
 import (
 	"time"
 
-	"github.com/chatgp/gpt3"
+	"github.com/all-in-aigc/gpt"
 )
 
 var (
 	apiKey string
 )
 
-func getClient() *gpt3.Client {
-	cli, _ := gpt3.NewClient(&gpt3.Options{
+func getClient() *gpt.Client {
+	cli, _ := gpt.NewClient(&gpt.Options{
+		BaseUri: "https://api.openai.com", // you can use a proxy url here
 		ApiKey:  apiKey,
 		Timeout: 30 * time.Second,
 		Debug:   true,

@@ -1,6 +1,6 @@
-# gpt3
+# gpt
 
-openai gpt-3 sdk, written by golang.
+openai gpt sdk, written by golang.
 
 ## Preparation
 
@@ -10,13 +10,13 @@ login the [openai official website](https://beta.openai.com/account/api-keys), a
 
 ## Quick Start
 
-1. install gpt3 sdk
+1. install gpt sdk
 
 ```shell
-go get -u github.com/chatgp/gpt3
+go get -u github.com/all-in-aigc/gpt
 ```
 
-2. request api with gpt-3 client
+2. request api with gpt client
 
 ```go
 package main
@@ -26,17 +26,18 @@ import (
 	"log"
 	"time"
 
-	"github.com/chatgp/gpt3"
+	"github.com/all-in-aigc/gpt"
 )
 
 func main() {
 	apiKey := "xxx"
 
-	// new gpt-3 client
-	cli, _ := gpt3.NewClient(&gpt3.Options{
+	// new gpt client
+	cli, _ := gpt.NewClient(&gpt.Options{
 		ApiKey:  apiKey,
 		Timeout: 30 * time.Second,
 		Debug:   true,
+		BaseUri: "https://xxx.com/openai", // use a proxy api, default baseuri is https://api.openai.com
 	})
 
 	// request api
@@ -82,6 +83,38 @@ message := res.Get("choices.0.message.content").String()
 
 fmt.Printf("message is: %s", message)
 // Output: xxx
+```
+
+- [Create Chat Completion With Function Call](https://platform.openai.com/docs/api-reference/chat/create)
+
+```go
+userQuestion := "What is the weather like in Boston?"
+
+uri := "/v1/chat/completions"
+params := map[string]interface{}{
+	"model": "gpt-3.5-turbo",
+	"messages": []map[string]interface{}{
+		{
+			"role":    "user",
+			"content": userQuestion,
+		},
+	},
+	"functions": getFuncs(),
+}
+
+res, err := cli.Post(uri, params)
+if err != nil {
+	log.Fatalf("request api failed: %v", err)
+}
+
+funcName := res.Get("choices.0.message.function_call.name").String()
+funcArgs := res.Get("choices.0.message.function_call.arguments").String()
+
+if funcName == "" || funcArgs == "" {
+	log.Fatalf("function call get args failed: %s", res)
+}
+
+fmt.Printf("function call name: %s, args: %v", funcName, funcArgs)
 ```
 
 - [Create Completion](https://beta.openai.com/docs/api-reference/completions/create)
@@ -149,10 +182,6 @@ fmt.Println(res.GetString("data.0.url"))
 
 ## Communication
 
-- Telegram Group: [ChatGPT Creators](https://t.me/+YkEGeRxB5Q0zODY1)
+- Telegram Group: [all in AIGC](https://t.me/+OtxKWYMf8UE0ZWQ1)
 
-- Discord Server: [ChatGPT Creators](https://discord.gg/qWshJnJs)
-
-- Wechat Group: [ChatGPT Creators](https://work.weixin.qq.com/gm/66944e9bd30628e9270c980bc756663d)
-
-![](./images/wechat_group.jpg)
+- Discord Server: [all in AIGC](https://discord.gg/qSrsTzuw)
