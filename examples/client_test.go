@@ -7,15 +7,20 @@ import (
 )
 
 var (
-	apiKey string
+	apiBaseUri string
+	apiKey     string
+	apiVersion string
+	model      string
 )
 
 func getClient() *gpt.Client {
 	cli, _ := gpt.NewClient(&gpt.Options{
-		BaseUri: "https://api.openai.com", // you can use a proxy url here
-		ApiKey:  apiKey,
-		Timeout: 30 * time.Second,
-		Debug:   true,
+		BaseUri:    apiBaseUri,
+		ApiKey:     apiKey,
+		Timeout:    30 * time.Second,
+		Debug:      true,
+		ApiVersion: apiVersion,
+		Model:      model,
 	})
 
 	return cli

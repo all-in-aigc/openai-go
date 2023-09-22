@@ -14,4 +14,10 @@ type Options struct {
 	ApiKey string
 	// BaseUri is used to set api baseuri
 	BaseUri string
+	// Model is used to set default model
+	Model string
+	// ApiVersion is used to set api version
+	ApiVersion string
+	// isAzure is a flag for azure openai
+	isAzure bool
 }

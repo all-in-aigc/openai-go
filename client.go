@@ -2,6 +2,7 @@ package gpt
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/idoubi/goutils/request"
@@ -22,6 +23,10 @@ func NewClient(opts *Options) (*Client, error) {
 	// set default api baseuri
 	if opts.BaseUri == "" {
 		opts.BaseUri = "https://api.openai.com"
+	} else {
+		if strings.Contains(opts.BaseUri, "openai.azure.com") {
+			opts.isAzure = true
+		}
 	}
 
 	cli := &Client{opts: opts}
@@ -38,6 +43,10 @@ func NewClient(opts *Options) (*Client, error) {
 
 // Get: request api with get method
 func (cli *Client) Get(uri string, args ...map[string]interface{}) (*request.Result, error) {
+	if cli.opts.isAzure {
+		uri = strings.TrimPrefix(uri, "/v1") + "?api-version=" + cli.opts.ApiVersion
+	}
+
 	params, headers := cli.parseArgs(args...)
 
 	return cli.getRequestClient().Get(uri, params, headers)
@@ -45,7 +54,16 @@ func (cli *Client) Get(uri string, args ...map[string]interface{}) (*request.Res
 
 // Post: request api with post method
 func (cli *Client) Post(uri string, args ...map[string]interface{}) (*request.Result, error) {
+	if cli.opts.isAzure {
+		uri = strings.TrimPrefix(uri, "/v1") + "?api-version=" + cli.opts.ApiVersion
+	}
+
 	data, headers := cli.parseArgs(args...)
+
+	// use default model
+	if _, ok := data["model"]; !ok {
+		data["model"] = cli.opts.Model
+	}
 
 	return cli.getRequestClient().Post(uri, data, headers)
 }
@@ -61,7 +79,12 @@ func (cli *Client) parseArgs(args ...map[string]interface{}) (map[string]interfa
 	if len(args) > 1 {
 		headers = args[1]
 	}
-	headers["Authorization"] = fmt.Sprintf("Bearer %s", cli.opts.ApiKey)
+
+	if cli.opts.isAzure {
+		headers["api-key"] = cli.opts.ApiKey
+	} else {
+		headers["Authorization"] = fmt.Sprintf("Bearer %s", cli.opts.ApiKey)
+	}
 
 	return params, headers
 }
