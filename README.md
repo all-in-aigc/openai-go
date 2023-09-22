@@ -30,7 +30,7 @@ import (
 )
 
 func main() {
-	apiKey := "xxx"
+	apiKey := "xxx" // your openai apikey, or azure openai apikey
 
 	// new gpt client
 	cli, _ := gpt.NewClient(&gpt.Options{
@@ -38,6 +38,10 @@ func main() {
 		Timeout: 30 * time.Second,
 		Debug:   true,
 		BaseUri: "https://xxx.com/openai", // use a proxy api, default baseuri is https://api.openai.com
+
+		// use azure openai
+		// BaseUri: "https://xxx.openai.azure.com/openai/deployments/gpt-35-turbo-16k", // your azure openai endpoint
+		// ApiVersion: "2023-07-01-preview", // azure openai api version
 	})
 
 	// request api
