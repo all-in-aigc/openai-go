@@ -1,10 +1,10 @@
-package gpt
+package openai
 
 import (
 	"time"
 )
 
-// Options can set custom options for ChatGPT request client
+// Options can set custom options for OpenAI client
 type Options struct {
 	// Debug is used to output debug message
 	Debug bool

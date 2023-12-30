@@ -1,22 +1,22 @@
-# gpt
+# openai-go
 
-openai gpt sdk, written by golang.
+openai go sdk
 
 ## Preparation
 
-login the [openai official website](https://beta.openai.com/account/api-keys), and get your own API_KEY.
+sign in [openai platform](https://platform.openai.com/api-keys), and get your own API_KEY.
 
 ![](./images/get_api_key.jpg)
 
 ## Quick Start
 
-1. install gpt sdk
+1. install openai-go sdk
 
 ```shell
-go get -u github.com/all-in-aigc/gpt
+go get -u github.com/all-in-aigc/openai-go
 ```
 
-2. request api with gpt client
+2. request api with openai-go client
 
 ```go
 package main
@@ -26,14 +26,14 @@ import (
 	"log"
 	"time"
 
-	"github.com/all-in-aigc/gpt"
+	openai "github.com/all-in-aigc/openai-go"
 )
 
 func main() {
 	apiKey := "xxx" // your openai apikey, or azure openai apikey
 
-	// new gpt client
-	cli, _ := gpt.NewClient(&gpt.Options{
+	// new openai client
+	cli, _ := openai.NewClient(&openai.Options{
 		ApiKey:  apiKey,
 		Timeout: 30 * time.Second,
 		Debug:   true,
@@ -59,7 +59,7 @@ func main() {
 }
 ```
 
-> see available apis in [OpenAI documents](https://beta.openai.com/docs/api-reference/completions/create)
+> see available apis in [OpenAI documents](https://platform.openai.com/docs/api-reference/completions/create)
 
 ## Examples
 
@@ -184,8 +184,9 @@ if err != nil {
 fmt.Println(res.GetString("data.0.url"))
 ```
 
-## Communication
+## More
 
-- Telegram Group: [all in AIGC](https://t.me/+OtxKWYMf8UE0ZWQ1)
+> if this project is helpful to you, buy me a coffee😄
 
-- Discord Server: [all in AIGC](https://discord.gg/qSrsTzuw)
+<a href="https://www.buymeacoffee.com/idoubi" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+

@@ -3,7 +3,7 @@ package examples
 import (
 	"time"
 
-	"github.com/all-in-aigc/gpt"
+	"github.com/all-in-aigc/openai-go"
 )
 
 var (
@@ -13,8 +13,8 @@ var (
 	model      string
 )
 
-func getClient() *gpt.Client {
-	cli, _ := gpt.NewClient(&gpt.Options{
+func getClient() *openai.Client {
+	cli, _ := openai.NewClient(&openai.Options{
 		BaseUri:    apiBaseUri,
 		ApiKey:     apiKey,
 		Timeout:    30 * time.Second,

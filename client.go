@@ -1,4 +1,4 @@
-package gpt
+package openai
 
 import (
 	"fmt"
@@ -8,13 +8,13 @@ import (
 	"github.com/idoubi/goutils/request"
 )
 
-// Client: GPT client
+// Client: OpenAI client
 type Client struct {
 	opts          *Options // custom options
 	requestClient *request.Client
 }
 
-// NewClient: new GPT Client
+// NewClient: new OpenAI Client
 func NewClient(opts *Options) (*Client, error) {
 	// set default options
 	if opts.Timeout <= 0 {

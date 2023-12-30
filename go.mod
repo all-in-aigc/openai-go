@@ -1,4 +1,4 @@
-module github.com/all-in-aigc/gpt
+module github.com/all-in-aigc/openai-go
 
 go 1.16
 
